@@ -9,6 +9,9 @@ import QtQuick.XmlListModel 2.0
 Window {
     id: root
     title: qsTr("Imgs")
+    property string currentIndexActualImage
+    signal sourceChanged
+
     visible: true
 
 
@@ -42,6 +45,14 @@ Window {
             source: "https://farm" + farm + ".static.flickr.com/" + server +"/" + id +"_" + secret + "_s.jpg"
 
             Behavior on opacity { NumberAnimation { duration: 500 } }
+            MouseArea {
+                anchors.fill: parent
+                onClicked: {
+                    currentIndexActualImage = "https://farm" + farm + ".static.flickr.com/" + server +"/" + id +"_" + secret + "_b.jpg"
+                    root.sourceChanged()
+                }
+            }
+
         }
     }
 
@@ -73,4 +84,13 @@ Window {
         }
     }
 
+    Image {
+        id: actualImage
+        anchors.fill: parent
+        fillMode: Image.PreserveAspectCrop
+        source:currentIndexActualImage
+    }
+
 }
+
+
