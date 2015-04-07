@@ -20,7 +20,7 @@ Window {
                 "method=flickr.photos.search&" +
                 "per_page=90&" +
                 "sort=date-taken-desc&" +
-                "text=kde&" +
+                "text=" + searchText.text + "&" +
                 "api_key=e36784df8a03fea04c22ed93318b291c&";
         query: "/rsp/photos/photo"
 
@@ -50,6 +50,14 @@ Window {
         id: flickr
         anchors { fill: parent; margins: 20 }
         spacing: 10
+
+        TextField {
+            id: searchText
+            Layout.preferredHeight: 128
+            Layout.fillWidth: true
+            text: "kde"
+            placeholderText: "Search ..."
+        }
 
         GridView {
             id: grid
