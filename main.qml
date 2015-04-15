@@ -72,7 +72,7 @@ Window {
                 id: searchText
                 Layout.preferredHeight: 128
                 Layout.fillWidth: true
-                text: "conf kde"
+                text: "KDE Akademy"
                 placeholderText: "Search ..."
             }
 
@@ -104,9 +104,18 @@ Window {
             value: actualImage.progress * 100
             maximumValue: 100
         }
-        MouseArea {
+        PinchArea {
             anchors.fill: parent
-            onClicked: stackView.pop()
+            pinch.target:actualImage
+            pinch.minimumRotation: -360
+            pinch.maximumRotation: 360
+            pinch.minimumScale: 0.1
+            pinch.maximumScale: 10
+
+            MouseArea {
+                anchors.fill: parent
+                onClicked: stackView.pop()
+            }
         }
     }
 }
