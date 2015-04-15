@@ -50,6 +50,7 @@ Window {
                 onClicked: {
                     currentIndexActualImage = "https://farm" + farm + ".static.flickr.com/" + server +"/" + id +"_" + secret + "_b.jpg"
                     root.sourceChanged()
+                    stackView.push(actualImage)
                 }
             }
 
@@ -57,36 +58,41 @@ Window {
     }
 
 
-    ColumnLayout {
-        id: flickr
-        anchors { fill: parent; margins: 20 }
-        spacing: 10
+    StackView {
+        id: stackView
+        anchors.fill: parent
+        // Implements back key navigation
+        focus: true
+        initialItem: ColumnLayout {
+            id: flickr
+            anchors { fill: parent; margins: 20 }
+            spacing: 10
 
-        TextField {
-            id: searchText
-            Layout.preferredHeight: 128
-            Layout.fillWidth: true
-            text: "Amritapuri College"
-            placeholderText: "Search ..."
-        }
+            TextField {
+                id: searchText
+                Layout.preferredHeight: 128
+                Layout.fillWidth: true
+                text: "conf kde"
+                placeholderText: "Search ..."
+            }
 
-        GridView {
-            id: grid
-            Layout.fillWidth: true
-            Layout.fillHeight: true
-            cacheBuffer: height * 3
+            GridView {
+                id: grid
+                Layout.fillWidth: true
+                Layout.fillHeight: true
+                cacheBuffer: height * 3
 
-            clip: true
-            cellWidth: grid.width/4; cellHeight: cellWidth
+                clip: true
+                cellWidth: grid.width/4; cellHeight: cellWidth
 
-            model: xmlModel
-            delegate: flickrItemDelegate
+                model: xmlModel
+                delegate: flickrItemDelegate
+            }
         }
     }
 
     Image {
         id: actualImage
-        anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
         source:currentIndexActualImage
         ProgressBar {
@@ -97,6 +103,10 @@ Window {
             visible: value != maximumValue && actualImage.status === Image.Loading
             value: actualImage.progress * 100
             maximumValue: 100
+        }
+        MouseArea {
+            anchors.fill: parent
+            onClicked: stackView.pop()
         }
     }
 }
