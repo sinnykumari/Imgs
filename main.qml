@@ -66,7 +66,7 @@ Window {
             id: searchText
             Layout.preferredHeight: 128
             Layout.fillWidth: true
-            text: "kde"
+            text: "Amritapuri College"
             placeholderText: "Search ..."
         }
 
@@ -89,8 +89,16 @@ Window {
         anchors.fill: parent
         fillMode: Image.PreserveAspectCrop
         source:currentIndexActualImage
+        ProgressBar {
+            id: imageLoadingProgress
+            anchors.centerIn: parent
+            width: parent.width *3/4
+            height: 200
+            visible: value != maximumValue && actualImage.status === Image.Loading
+            value: actualImage.progress * 100
+            maximumValue: 100
+        }
     }
-
 }
 
 
